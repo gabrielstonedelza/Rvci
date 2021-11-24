@@ -7,6 +7,8 @@ urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
     path('', views.rvci_home, name="home"),
     path('profile/', views.profile),
+    path('update_profile/', views.update_profile),
+    path('update_username/', views.update_username),
     path('password-reset/', auth_views.PasswordResetView.as_view(
         template_name='users/password_reset.html'), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_multiple_model',
     'django_cleanup.apps.CleanupConfig',
 ]
 
@@ -85,8 +86,14 @@ WSGI_APPLICATION = 'rvci.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'rvci',
+        'USER': 'rvciuser',
+        'PASSWORD': 'Royalsjas5',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
