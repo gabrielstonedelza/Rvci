@@ -4,12 +4,14 @@ from .serializers import UsersSerializer, ProfileSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
+from drf_multiple_model.views import ObjectMultipleModelAPIView
 
 # Create your views here.
 def rvci_home(request):
     return render(request, "users/rvci_home.html")
 
-api_view(['GET'])
+
+@api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def profile(request):
     my_profile = Profile.objects.filter(user=request.user)
@@ -19,8 +21,8 @@ def profile(request):
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def update_profile(request):
-    my_profile = Profile.objects.filter(user=request.user)
-    serializer = ProfileSerializer(my_profile, many=True)
+    my_profile = Profile.objects.get(user=request.user)
+    serializer = ProfileSerializer(my_profile, data=request.data)
     if serializer.is_valid():
         serializer.save(user=request.user)
         return Response(serializer.data)
@@ -29,8 +31,8 @@ def update_profile(request):
 @api_view(['GET', 'PUT'])
 @permission_classes([permissions.IsAuthenticated])
 def update_username(request):
-    user = User.objects.filter(user=request.user)
-    serializer = UsersSerializer(user,many=True)
+    user = User.objects.get(username=request.user.username)
+    serializer = UsersSerializer(user,data=request.data)
     if serializer.is_valid():
         serializer.save(user=request.user)
         return Response(serializer.data)

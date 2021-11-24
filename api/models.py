@@ -55,7 +55,8 @@ class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     story = models.FileField(upload_to="stories")
     views = models.ManyToManyField(User,related_name="viewers")
-    date_posted = models.DateTimeField(auto_now_add=True)
+    date_posted = models.DateField(auto_now_add=True)
+    time_posted = models.TimeField(auto_now_add=True)
 
     def __str__(self):
         return self.user.username
