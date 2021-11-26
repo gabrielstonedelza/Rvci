@@ -3,6 +3,8 @@ from django.conf import settings
 from django.utils import timezone
 from PIL import Image
 from django.utils.text import slugify
+from .validator import validate_story_size
+from .validator import validate_devotion_size
 
 User = settings.AUTH_USER_MODEL
 
@@ -10,7 +12,8 @@ class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     message = models.TextField()
-    devotion_vid = models.FileField(upload_to="dev-vids")
+    devotion_vid = models.FileField(upload_to="dev-vids",validators=[validate_devotion_size])
+    likes = models.ManyToManyField(User,related_name="liking_devotion",blank=True)
     views = models.IntegerField(default=0)
     slug = models.SlugField(max_length=100, default='')
     date_posted = models.DateTimeField(auto_now_add=True)
@@ -22,7 +25,7 @@ class Devotion(models.Model):
         return f"/{self.slug}/"
 
     def get_devotion_vid(self):
-        if self.image:
+        if self.devotion_vid:
             return "http://127.0.0.1:8000" + self.devotion_vid.url
 
         return ''
@@ -53,8 +56,8 @@ class PrayerList(models.Model):
 
 class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.FileField(upload_to="stories")
-    views = models.ManyToManyField(User,related_name="viewers")
+    story = models.FileField(upload_to="stories",validators=[validate_story_size])
+    views = models.ManyToManyField(User,related_name="viewers",blank=True)
     date_posted = models.DateField(auto_now_add=True)
     time_posted = models.TimeField(auto_now_add=True)
 
@@ -62,10 +65,10 @@ class Stories(models.Model):
         return self.user.username
 
     def get_absolute_story_url(self):
-        return f"/{self.slug}/"
+        return f"/{self.pk}/"
 
     def get_story_vid(self):
-        if self.image:
+        if self.story:
             return "http://127.0.0.1:8000" + self.story.url
         return ''
 
@@ -85,7 +88,7 @@ class Events(models.Model):
         return f"/{self.slug}/"
 
     def get_event_poster(self):
-        if self.image:
+        if self.event_poster:
             return "http://127.0.0.1:8000" + self.event_poster.url
 
         return ''
@@ -119,17 +122,6 @@ class Announcements(models.Model):
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
-class Likes(models.Model):
-    devotion = models.ForeignKey(Devotion, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="likee")
-    likes = models.IntegerField(default=0)
-    date_liked = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return self.devotion.title
-    def get_absolute_like_url(self):
-        return f"/{self.id}/"
-
 class Comments(models.Model):
     devotion = models.ForeignKey(Devotion, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="commentee")
@@ -140,7 +132,7 @@ class Comments(models.Model):
         return self.devotion.title
 
     def get_absolute_comment_url(self):
-        return f"/{self.id}/"
+        return f"/{self.pk}/"
 
 class PrayFor(models.Model):
     prayer = models.ForeignKey(PrayerList, on_delete=models.CASCADE)
@@ -172,7 +164,7 @@ class NotifyMe(models.Model):
     date_notified = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"New {self.notify_title} notification sent to  {self.user}"
+        return f"{self.notify_title} notification sent to  {self.user}"
 
 
     def get_absolute_notification_url(self):

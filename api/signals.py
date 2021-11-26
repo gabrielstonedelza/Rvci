@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Devotion,PrayerList,Stories,Events,Announcements,Likes,Comments,PrayFor,NotifyMe
+from .models import Devotion,PrayerList,Stories,Events,Announcements,Comments,PrayFor,NotifyMe
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from users.models import User
@@ -32,53 +32,43 @@ def create_prayerlist(sender,created,instance, **kwargs):
 @receiver(post_save, sender=Stories)
 def create_stories(sender, created, instance, **kwargs):
     title = f"Story from {instance.user}"
-    message = f"{instance.user} added a new prayer request"
+    message = f"{instance.user} added posted a new story"
     users = User.objects.exclude(id=instance.user.id)
 
     if created:
         for i in users:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,story_slug=instance.slug)
+            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,story_slug=instance.pk)
 
 @receiver(post_save, sender=Events)
 def create_event(sender, created, instance, **kwargs):
     title = f"New event from RVCI"
     message = f"RVCI added a new event"
-    users = User.objects.exclude(id=instance.user.id)
+    users = User.objects.exclude(id=1)
+    admin_user = User.objects.get(id=1)
 
     if created:
         for i in users:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,event_slug=instance.slug)
+            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=admin_user,event_slug=instance.slug)
 
 
 @receiver(post_save, sender=Announcements)
 def create_announcement(sender, created, instance, **kwargs):
     title = f"New announcement from RVCI"
     message = f"Read RVCI announcement today"
-    users = User.objects.exclude(id=instance.user.id)
+    users = User.objects.exclude(id=1)
+    admin_user = User.objects.get(id=1)
 
     if created:
         for i in users:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,announcement_slug=instance.slug)
-
-@receiver(post_save, sender=Likes)
-def create_like(sender, created, instance, **kwargs):
-    title = f"New devotion like"
-    message = f"{instance.user} just liked your devotion {instance.devotion.title}"
-    users = User.objects.exclude(id=instance.user.id)
-
-    if created:
-        for i in users:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,likes_slug=instance.slug)
+            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=admin_user,announcement_slug=instance.slug)
 
 @receiver(post_save, sender=Comments)
 def create_comment(sender, created, instance, **kwargs):
     title = f"New devotion comment"
     message = f"{instance.user} just commented your devotion {instance.devotion.title}"
-    users = User.objects.exclude(id=instance.user.id)
 
     if created:
-        for i in users:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,comments_slug=instance.slug)
+        NotifyMe.objects.create(user=instance.devotion.user, notify_title=title, notify_alert=message, notify_from=instance.user,comments_slug=instance.pk)
 
 @receiver(post_save, sender=PrayFor)
 def create_prayfor(sender, created, instance, **kwargs):
