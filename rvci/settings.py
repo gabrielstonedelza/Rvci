@@ -28,7 +28,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['159.65.241.141','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['.rvci.xyz','159.65.241.141','localhost','127.0.0.1']
 
 
 # Application definition
