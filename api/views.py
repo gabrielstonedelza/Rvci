@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import  Devotion,PrayerList,Stories,Events,Announcements,Comments,PrayFor,NotifyMe
-from .serializers import DevotionSerializer,PrayerListSerializer,StoriesSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,NotifymeSerializer,AnnouncementSerializer
+from .models import  Devotion,PrayerList,Events,Announcements,Comments,PrayFor,NotifyMe,Testimonies
+from .serializers import DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,NotifymeSerializer,AnnouncementSerializer,TestimonySerializer
 from datetime import datetime,date,time,timedelta
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
@@ -83,27 +83,6 @@ def prayer_detail(request,slug):
         prayer.views +=1
         prayer.save()
     serializer = PrayerListSerializer(prayer,many=False)
-    return Response(serializer.data)
-
-# post new story
-@api_view(['POST'])
-@permission_classes([permissions.IsAuthenticated])
-def add_story(request):
-    serializer = StoriesSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save(user=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# story detail
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def story_detail(request, id):
-    story = get_object_or_404(Stories, id=id)
-    if story:
-        if not Stories.objects.filter(id=request.user.id).exists():
-            story.views.add(request.user)
-    serializer = StoriesSerializer(story, many=False)
     return Response(serializer.data)
 
 # add new event
@@ -215,3 +194,26 @@ def prayfor_detail(request,id):
     prayer = get_object_or_404(PrayerList, id=id)
     serializer = PrayforSerializer(prayer,many=False)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_testimonies(request):
+    testimonies = Testimonies.objects.all().order_by('-date_posted')
+    serializer = TestimonySerializer(testimonies,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def testimony_detail(request,pk):
+    testimony = get_object_or_404(Testimonies,pk=pk)
+    serializer = TestimonySerializer(testimony,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def post_testimony(request):
+    serializer = TestimonySerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Devotion,PrayerList,Stories,Events,Announcements,Comments,PrayFor,NotifyMe
+from .models import Devotion,PrayerList,Events,Announcements,Comments,PrayFor,NotifyMe
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from users.models import User
@@ -27,17 +27,6 @@ def create_prayerlist(sender,created,instance, **kwargs):
     if created:
         for i in users:
             NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,prayerlist_slug=instance.slug)
-
-
-@receiver(post_save, sender=Stories)
-def create_stories(sender, created, instance, **kwargs):
-    title = f"Story from {instance.user}"
-    message = f"{instance.user} added posted a new story"
-    users = User.objects.exclude(id=instance.user.id)
-
-    if created:
-        for i in users:
-            NotifyMe.objects.create(user=i, notify_title=title, notify_alert=message, notify_from=instance.user,story_slug=instance.pk)
 
 @receiver(post_save, sender=Events)
 def create_event(sender, created, instance, **kwargs):

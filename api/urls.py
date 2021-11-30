@@ -10,8 +10,6 @@ urlpatterns = [
     path('get_prayers/', views.get_prayer_lists),
     path('get_user_prayers/', views.get_user_prayer_lists),
     path('pray_detail/<str:slug>/', views.prayer_detail),
-    path('add_story/', views.add_story),
-    path('story_detail/<int:id>/', views.story_detail),
     path('add_event/', views.add_event),
     path('get_current/', views.get_current_event),
     path('event_detail/<str:slug>/', views.event_detail),
@@ -23,4 +21,7 @@ urlpatterns = [
     path('comment_detail/<int:id>/', views.comment_detail),
     path('pray_for_user/<int:id>/', views.pray_for_user),
     path('get_pray_for_lists/<int:id>/', views.get_pray_for_lists),
+    path('get_testimonies/',views.get_testimonies),
+    path('get_testimony/<int:pk>/', views.testimony_detail),
+    path('post_testimony/',views.post_testimony)
 ]

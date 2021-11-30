@@ -54,23 +54,17 @@ class PrayerList(models.Model):
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
-class Stories(models.Model):
+class Testimonies(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    story = models.FileField(upload_to="stories",validators=[validate_story_size])
-    views = models.ManyToManyField(User,related_name="viewers",blank=True)
-    date_posted = models.DateField(auto_now_add=True)
-    time_posted = models.TimeField(auto_now_add=True)
+    testimony = models.TextField()
+    views = models.IntegerField(default=0)
+    date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return f"Testimony from {self.user.username}"
 
-    def get_absolute_story_url(self):
+    def get_absolute_testimony_url(self):
         return f"/{self.pk}/"
-
-    def get_story_vid(self):
-        if self.story:
-            return "http://127.0.0.1:8000" + self.story.url
-        return ''
 
 class Events(models.Model):
     title = models.CharField(max_length=200)

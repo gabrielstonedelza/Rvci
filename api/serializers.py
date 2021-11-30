@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import  Devotion,PrayerList,Stories,Events,Announcements,Comments,PrayFor,NotifyMe
+from .models import  Devotion,PrayerList,Events,Announcements,Comments,PrayFor,NotifyMe,Testimonies
 
 class DevotionSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
@@ -19,18 +19,6 @@ class PrayerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrayerList
         fields = ['id','user','username','prayer_title','prayer_request','views','slug','get_absolute_prayerlist_url','date_posted']
-        read_only_fields = ['user']
-
-    def get_username(self, user):
-        username = user.user.username
-        return username
-
-class StoriesSerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField('get_username')
-
-    class Meta:
-        model = Stories
-        fields = ['id','user','username','story','views','get_absolute_story_url','get_story_vid','date_posted','time_posted']
         read_only_fields = ['user']
 
     def get_username(self, user):
@@ -83,4 +71,17 @@ class NotifymeSerializer(serializers.ModelSerializer):
     def get_username(self, user):
         username = user.user.username
         return username
+
+class TestimonySerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField('get_username')
+
+    class Meta:
+        model =Testimonies
+        fields = ['id','user','username','testimony','date_posted']
+        read_only_fields = ['user']
+
+    def get_username(self, user):
+        username = user.user.username
+        return username
+
 
