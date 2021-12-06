@@ -175,7 +175,7 @@ class NotifyMe(models.Model):
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
-class ImageBox(models.Model):
+class ImageBoxes(models.Model):
     caption = models.CharField(max_length=100)
     image = models.ImageField(upload_to="images")
     date_posted = models.DateTimeField(auto_now_add=True)
@@ -183,7 +183,7 @@ class ImageBox(models.Model):
     def __str__(self):
         return self.caption
 
-class VidBox(models.Model):
+class VidBoxes(models.Model):
     caption = models.CharField(max_length=100)
     vid = models.FileField(upload_to="vids")
     date_posted = models.DateTimeField(auto_now_add=True)
