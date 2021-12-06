@@ -21,7 +21,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'user', 'profile_pic','bio']
+        fields = ['id', 'username', 'user', 'profile_pic','bio','user_profile_pic']
         read_only_fields = ['user']
 
     def get_username(self, user):
