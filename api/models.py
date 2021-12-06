@@ -8,6 +8,11 @@ from .validator import validate_devotion_size
 
 User = settings.AUTH_USER_MODEL
 
+GALLERY_TYPE = (
+    ("Image","Image"),
+    ("Video","video"),
+)
+
 class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
@@ -70,6 +75,7 @@ class Events(models.Model):
     title = models.CharField(max_length=200)
     event_date = models.DateTimeField(default=timezone.now)
     event_time = models.DateTimeField(default=timezone.now)
+    event_description = models.TextField()
     event_poster = models.ImageField(upload_to="event_posters")
     views = models.IntegerField(default=0)
     slug = models.SlugField(max_length=100, default='')
@@ -168,3 +174,19 @@ class NotifyMe(models.Model):
         value = self.notify_title
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
+
+class ImageBox(models.Model):
+    caption = models.CharField(max_length=100)
+    image = models.ImageField(upload_to="images")
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.caption
+
+class VidBox(models.Model):
+    caption = models.CharField(max_length=100)
+    vid = models.FileField(upload_to="vids")
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.caption
