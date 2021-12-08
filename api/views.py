@@ -6,6 +6,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 
+from users.serializers import ProfileSerializer
+
 # add devotion
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
@@ -217,3 +219,43 @@ def post_testimony(request):
         serializer.save(user=request.user)
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_users(request):
+    users = User.objects.exclude(id=request.user.id)
+    serializer = ProfileSerializer(users,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def add_to_images(request):
+    serializer = ImageBoxSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def add_to_vids(request):
+    serializer = VidBoxSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_images(request):
+    images = ImageBoxes.objects.all().order_by('-date_posted')
+    serializer = ImageBoxSerializer(images,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_all_vids(request):
+    images = VidBoxes.objects.all().order_by('-date_posted')
+    serializer = VidBoxSerializer(images,many=True)
+    return Response(serializer.data)

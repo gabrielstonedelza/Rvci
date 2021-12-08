@@ -39,6 +39,6 @@ class Profile(models.Model):
 
     def user_profile_pic(self):
         if self.profile_pic:
-            return "http://127.0.0.1:8000" + self.profile_pic.url
+            return "https://rvci.xyz" + self.profile_pic.url
 
         return ''

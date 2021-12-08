@@ -31,7 +31,7 @@ class Devotion(models.Model):
 
     def get_devotion_vid(self):
         if self.devotion_vid:
-            return "http://127.0.0.1:8000" + self.devotion_vid.url
+            return "https://rvci.xyz" + self.devotion_vid.url
 
         return ''
 
@@ -89,7 +89,7 @@ class Events(models.Model):
 
     def get_event_poster(self):
         if self.event_poster:
-            return "http://127.0.0.1:8000" + self.event_poster.url
+            return "https://rvci.xyz" + self.event_poster.url
 
         return ''
 

@@ -23,5 +23,11 @@ urlpatterns = [
     path('get_pray_for_lists/<int:id>/', views.get_pray_for_lists),
     path('get_testimonies/',views.get_testimonies),
     path('get_testimony/<int:pk>/', views.testimony_detail),
-    path('post_testimony/',views.post_testimony)
+    path('post_testimony/',views.post_testimony),
+    path('get_all_users/', views.get_all_users),
+
+    path('add_to_images/', views.add_to_images),
+    path('add_to_vids/',views.add_to_vids),
+    path("get_images/",views.get_all_images),
+    path('get_vids/', views.get_all_vids)
 ]
