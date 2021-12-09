@@ -59,6 +59,12 @@ class PrayerList(models.Model):
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
+    def get_user_profile_pic(self):
+        if self.user:
+            return "https://rvci.xyz" + self.user.profile.profile_pic.url
+
+        return ''
+
 class Testimonies(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     testimony = models.TextField()
