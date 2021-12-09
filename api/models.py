@@ -17,7 +17,6 @@ class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     message = models.TextField()
-    devotion_vid = models.FileField(upload_to="dev-vids",validators=[validate_devotion_size])
     likes = models.ManyToManyField(User,related_name="liking_devotion",blank=True)
     views = models.IntegerField(default=0)
     slug = models.SlugField(max_length=100, default='')
@@ -28,12 +27,6 @@ class Devotion(models.Model):
 
     def get_absolute_devotion_url(self):
         return f"/{self.slug}/"
-
-    def get_devotion_vid(self):
-        if self.devotion_vid:
-            return "https://rvci.xyz" + self.devotion_vid.url
-
-        return ''
 
     def save(self, *args, **kwargs):
         value = self.title
