@@ -60,10 +60,8 @@ class PrayerList(models.Model):
         super().save(*args, **kwargs)
 
     def get_user_profile_pic(self):
-        if self.user:
-            return "https://rvci.xyz" + self.user.profile.profile_pic.url
-
-        return ''
+    
+        return "https://rvci.xyz" + self.user.profile.profile_pic.url
 
 class Testimonies(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
