@@ -18,7 +18,7 @@ class PrayerListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PrayerList
-        fields = ['id','user','username','prayer_title','prayer_request','views','slug','get_absolute_prayerlist_url','get_user_profile_pic','date_posted']
+        fields = ['id','user','username','prayer_title','prayer_request','views','slug','get_absolute_prayerlist_url','date_posted']
         read_only_fields = ['user']
 
     def get_username(self, user):
