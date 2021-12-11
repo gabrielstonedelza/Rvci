@@ -208,6 +208,9 @@ def get_testimonies(request):
 @permission_classes([permissions.IsAuthenticated])
 def testimony_detail(request,pk):
     testimony = Testimonies.objects.filter(pk=pk)
+    if testimony:
+        testimony.views +=1
+        testimony.save()
     serializer = TestimonySerializer(testimony,many=True)
     return Response(serializer.data)
 
