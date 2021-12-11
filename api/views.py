@@ -207,7 +207,7 @@ def get_testimonies(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def testimony_detail(request,pk):
-    testimony = get_object_or_404(Testimonies,pk=pk)
+    testimony = Testimonies.objects.filter(pk=pk)
     serializer = TestimonySerializer(testimony,many=True)
     return Response(serializer.data)
 
