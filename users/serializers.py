@@ -28,7 +28,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_username(self, user):
         username = user.user.username
         return username
-    
+
     def get_fullname(self, user):
         full_name = user.user.full_name
         return full_name
