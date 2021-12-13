@@ -7,6 +7,7 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 
 from users.serializers import ProfileSerializer
+from users.models import User
 
 # add devotion
 @api_view(['POST'])
