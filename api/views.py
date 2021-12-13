@@ -7,7 +7,7 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.response import Response
 
 from users.serializers import ProfileSerializer
-from users.models import User
+from users.models import User,Profile
 
 # add devotion
 @api_view(['POST'])
@@ -228,7 +228,7 @@ def post_testimony(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_users(request):
-    users = User.objects.exclude(id=request.user.id)
+    users = Profile.objects.exclude(id=request.user.id)
     serializer = ProfileSerializer(users,many=True)
     return Response(serializer.data)
 
