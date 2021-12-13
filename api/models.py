@@ -181,7 +181,7 @@ class NotifyMe(models.Model):
 
 class ImageBoxes(models.Model):
     caption = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="images")
+    image = models.CharField(max_length=500)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -189,7 +189,7 @@ class ImageBoxes(models.Model):
 
 class VidBoxes(models.Model):
     caption = models.CharField(max_length=100)
-    vid = models.FileField(upload_to="vids")
+    vid = models.CharField(max_length=500)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
