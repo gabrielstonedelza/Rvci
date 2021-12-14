@@ -19,6 +19,7 @@ class UsersSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
     full_name = serializers.SerializerMethodField('get_fullname')
+    phone = serializers.SerializerMethodField('get_phone')
 
     class Meta:
         model = Profile
@@ -32,3 +33,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_fullname(self, user):
         full_name = user.user.full_name
         return full_name
+
+    def get_phone(self, user):
+        phone = user.user.phone
+        return phone
