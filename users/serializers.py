@@ -22,7 +22,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'full_name', 'user', 'profile_pic','bio','user_profile_pic']
+        fields = ['id', 'username', 'full_name', 'user','phone', 'profile_pic','bio','user_profile_pic']
         read_only_fields = ['user']
 
     def get_username(self, user):
