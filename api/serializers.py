@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, NotifyMe, Testimonies, ImageBoxes, VidBoxes)
+from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor,Testimonies, ImageBoxes, VidBoxes)
 
 class DevotionSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
 
     class Meta:
         model = Devotion
-        fields = ['id','user','username','title','message','devotion_vid','likes','views','slug','get_absolute_devotion_url','get_devotion_vid','date_posted']
+        fields = ['id','user','username','devotion_vid','get_devotion_vid','date_posted']
         read_only_fields = ['user']
 
     def get_username(self, user):
@@ -54,18 +54,6 @@ class PrayforSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrayFor
         fields = ['id','user','username','prayer','prayer_text','get_absolute_prayfor_url','date_posted']
-        read_only_fields = ['user']
-
-    def get_username(self, user):
-        username = user.user.username
-        return username
-
-class NotifymeSerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField('get_username')
-
-    class Meta:
-        model = NotifyMe
-        fields = ['id','user','username','notify_title','notify_alert','notify_from','read','devotion_slug','prayerlist_slug','story_slug','event_slug','announcement_slug','likes_slug','comments_slug','prayfor_slug','slug','get_absolute_notification_url','date_notified']
         read_only_fields = ['user']
 
     def get_username(self, user):

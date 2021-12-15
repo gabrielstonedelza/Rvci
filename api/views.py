@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, NotifyMe, Testimonies, ImageBoxes, VidBoxes)
-from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,NotifymeSerializer,AnnouncementSerializer,TestimonySerializer,ImageBoxSerializer,VidBoxSerializer)
+from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, Testimonies, ImageBoxes, VidBoxes)
+from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,AnnouncementSerializer,TestimonySerializer,ImageBoxSerializer,VidBoxSerializer)
 from datetime import datetime,date,time,timedelta
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
