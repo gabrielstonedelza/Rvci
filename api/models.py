@@ -15,7 +15,7 @@ GALLERY_TYPE = (
 
 class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    devotion_vid = models.FileField(upload_to="dev-vids",validators=[validate_devotion_size])
+    devotion_vid = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -23,12 +23,6 @@ class Devotion(models.Model):
 
     def get_absolute_devotion_url(self):
         return f"/{self.pk}/"
-
-    def get_devotion_vid(self):
-        if self.devotion_vid:
-            return "https://rvci.xyz" + self.devotion_vid.url
-
-        return ''
 
 
 class PrayerList(models.Model):
@@ -144,14 +138,6 @@ class PrayFor(models.Model):
 class ImageBoxes(models.Model):
     caption = models.CharField(max_length=100)
     image = models.TextField()
-    date_posted = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.caption
-
-class VidBoxes(models.Model):
-    caption = models.CharField(max_length=100)
-    vid = models.CharField(max_length=500)
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

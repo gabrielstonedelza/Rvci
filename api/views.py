@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, Testimonies, ImageBoxes, VidBoxes)
-from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,AnnouncementSerializer,TestimonySerializer,ImageBoxSerializer,VidBoxSerializer)
+from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, Testimonies, ImageBoxes)
+from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,AnnouncementSerializer,TestimonySerializer,ImageBoxSerializer)
 from datetime import datetime,date,time,timedelta
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
@@ -241,15 +241,6 @@ def add_to_images(request):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['POST'])
-@permission_classes([permissions.AllowAny])
-def add_to_vids(request):
-    serializer = VidBoxSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_all_images(request):
@@ -257,9 +248,3 @@ def get_all_images(request):
     serializer = ImageBoxSerializer(images,many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-def get_all_vids(request):
-    images = VidBoxes.objects.all().order_by('-date_posted')
-    serializer = VidBoxSerializer(images,many=True)
-    return Response(serializer.data)
