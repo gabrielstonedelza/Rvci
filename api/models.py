@@ -19,7 +19,7 @@ class Devotion(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.user.username
 
     def get_absolute_devotion_url(self):
         return f"/{self.pk}/"
@@ -140,35 +140,6 @@ class PrayFor(models.Model):
 
     def get_absolute_prayfor_url(self):
         return f"/{self.id}/"
-
-# class NotifyMe(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     notify_title = models.CharField(max_length=100, default="New Notification")
-#     notify_alert = models.CharField(max_length=100)
-#     notify_from = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="notification_from")
-#     read = models.BooleanField(default=False)
-#     devotion_slug = models.CharField(max_length=100)
-#     prayerlist_slug = models.CharField(max_length=100, blank=True)
-#     story_slug = models.CharField(max_length=100, blank=True)
-#     event_slug = models.CharField(max_length=100, blank=True)
-#     announcement_slug = models.CharField(max_length=100, blank=True)
-#     likes_slug = models.CharField(max_length=100, blank=True)
-#     comments_slug = models.CharField(max_length=100, blank=True)
-#     prayfor_slug = models.CharField(max_length=100, blank=True)
-#     slug = models.SlugField(max_length=100, default='')
-#     date_notified = models.DateTimeField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return f"{self.notify_title} notification sent to  {self.user}"
-#
-#
-#     def get_absolute_notification_url(self):
-#         return f"/{self.slug}/"
-#
-#     def save(self, *args, **kwargs):
-#         value = self.notify_title
-#         self.slug = slugify(value, allow_unicode=True)
-#         super().save(*args, **kwargs)
 
 class ImageBoxes(models.Model):
     caption = models.CharField(max_length=100)
