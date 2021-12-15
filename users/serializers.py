@@ -20,10 +20,11 @@ class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
     full_name = serializers.SerializerMethodField('get_fullname')
     phone = serializers.SerializerMethodField('get_phone')
+    email = serializers.SerializerMethodField('get_email')
 
     class Meta:
         model = Profile
-        fields = ['id', 'username', 'full_name', 'user','phone', 'profile_pic','bio','user_profile_pic']
+        fields = ['id', 'username', 'full_name', 'user','phone','email', 'profile_pic','bio','user_profile_pic']
         read_only_fields = ['user']
 
     def get_username(self, user):
@@ -37,3 +38,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_phone(self, user):
         phone = user.user.phone
         return phone
+
+    def get_email(self, user):
+        email = user.user.email
+        return email
