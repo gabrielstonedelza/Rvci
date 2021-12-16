@@ -17,6 +17,7 @@ class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title  = models.CharField(max_length=200)
     message = models.TextField()
+    devotion_vid = models.TextField(blank=True,default="")
     slug = models.SlugField(max_length=100, default='')
     date_posted = models.DateTimeField(auto_now_add=True)
 
