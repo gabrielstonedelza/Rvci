@@ -156,4 +156,4 @@ class VidBoxes(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.caption
+        return self.vid_url
