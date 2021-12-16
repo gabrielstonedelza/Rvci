@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, Testimonies, ImageBoxes,VidBoxes)
-from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,AnnouncementSerializer,TestimonySerializer,ImageBoxSerializer,VidBoxSerializer)
+from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor, Testimonies, ImageBoxes,VidBoxes,LiveNow)
+from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,CommentsSerializer,PrayforSerializer,AnnouncementSerializer,TestimonySerializer,ImageBoxSerializer,VidBoxSerializer,LiveSerializer)
 from datetime import datetime,date,time,timedelta
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
@@ -262,4 +262,20 @@ def add_to_vids(request):
 def get_all_videos(request):
     all_vids = VidBoxes.objects.all().order_by('-date_posted')
     serializer = VidBoxSerializer(all_vids,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+def add_live(request):
+    serializer = LiveSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_live_now(request):
+    live_now = LiveNow.objects.all().order_by('-date_posted')
+    serializer = LiveSerializer(live_now,many=True)
     return Response(serializer.data)

@@ -157,3 +157,10 @@ class VidBoxes(models.Model):
 
     def __str__(self):
         return self.vid_url
+
+class LiveNow(models.Model):
+    live_url = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.live_url
