@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor,Testimonies, ImageBoxes)
+from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor,Testimonies, ImageBoxes,VidBoxes)
 
 class DevotionSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
@@ -76,3 +76,8 @@ class ImageBoxSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageBoxes
         fields = ['id','caption','image','date_posted']
+
+class VidBoxSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImageBoxes
+        fields = ['id','vid_url','date_posted']

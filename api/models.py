@@ -17,7 +17,7 @@ class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title  = models.CharField(max_length=200)
     message = models.TextField()
-    devotion_vid = models.TextField(blank=True,default="")
+    devotion_vid = models.CharField(max_length=100,blank=True,default="")
     slug = models.SlugField(max_length=100, default='')
     date_posted = models.DateTimeField(auto_now_add=True)
 
@@ -146,6 +146,13 @@ class PrayFor(models.Model):
 class ImageBoxes(models.Model):
     caption = models.CharField(max_length=100)
     image = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.caption
+
+class VidBoxes(models.Model):
+    vid_url = models.CharField(max_length=100,default="")
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
