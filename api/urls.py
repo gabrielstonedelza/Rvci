@@ -29,5 +29,5 @@ urlpatterns = [
     path('add_to_images/', views.add_to_images),
     path('add_to_vids/',views.add_to_vids),
     path("get_images/",views.get_all_images),
-    path('get_vids/', views.get_all_vids)
+    path('get_vids/', views.get_all_videos)
 ]

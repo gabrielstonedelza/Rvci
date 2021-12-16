@@ -259,7 +259,7 @@ def add_to_vids(request):
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
-def get_all_vids(request):
-    images = ImageBoxes.objects.all().order_by('-date_posted')
-    serializer = VidBoxSerializer(images,many=True)
+def get_all_videos(request):
+    all_vids = VidBoxes.objects.all().order_by('-date_posted')
+    serializer = VidBoxSerializer(all_vids,many=True)
     return Response(serializer.data)
