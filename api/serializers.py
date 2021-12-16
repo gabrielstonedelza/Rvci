@@ -6,7 +6,7 @@ class DevotionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Devotion
-        fields = ['id','user','username','title','message','date_posted']
+        fields = ['id','user','username','title','message','slug','date_posted']
         read_only_fields = ['user']
 
     def get_username(self, user):
