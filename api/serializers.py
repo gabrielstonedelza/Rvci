@@ -79,5 +79,5 @@ class ImageBoxSerializer(serializers.ModelSerializer):
 
 class VidBoxSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ImageBoxes
+        model = VidBoxes
         fields = ['id','vid_url','date_posted']
