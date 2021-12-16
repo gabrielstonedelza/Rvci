@@ -15,14 +15,21 @@ GALLERY_TYPE = (
 
 class Devotion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    devotion_vid = models.TextField()
+    title  = models.CharField(max_length=200)
+    message = models.TextField()
+    slug = models.SlugField(max_length=100, default='')
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.username
+        return self.title
 
     def get_absolute_devotion_url(self):
-        return f"/{self.pk}/"
+        return f"/{self.slug}/"
+
+    def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = slugify(value, allow_unicode=True)
+        super().save(*args, **kwargs)
 
 
 class PrayerList(models.Model):
