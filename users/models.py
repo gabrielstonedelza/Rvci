@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from PIL import Image
-
+from api.process_mail import send_my_mail
+from django.conf import settings
 DeUser = settings.AUTH_USER_MODEL
 
 
@@ -16,6 +17,12 @@ class User(AbstractUser):
 
     def get_username(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.email:
+            send_my_mail(f"Hi from RVCI", settings.EMAIL_HOST_USER, self.email, {"name": self.username},
+                         "email_templates/registration_success.html")
 
 
 
