@@ -18,11 +18,11 @@ class User(AbstractUser):
     def get_username(self):
         return self.username
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.email:
-            send_my_mail(f"Hi from RVCI", settings.EMAIL_HOST_USER, self.email, {"name": self.username},
-                         "email_templates/registration_success.html")
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     if self.email:
+    #         send_my_mail(f"Hi from RVCI", settings.EMAIL_HOST_USER, self.email, {"name": self.username},
+    #                      "email_templates/registration_success.html")
 
 
 
