@@ -1,13 +1,12 @@
 from django.contrib import admin
-from .models import (Devotion, PrayerList, Testimonies, Events, Announcements, Comments, PrayFor, ImageBoxes,VidBoxes,LiveNow)
+from .models import (Devotion, PrayerList, Events, Announcements, PrayFor, ImageBoxes,VidBoxes,LiveNow,Stories)
 
 admin.site.register(Devotion)
 admin.site.register(PrayerList)
-admin.site.register(Testimonies)
 admin.site.register(Events)
 admin.site.register(Announcements)
-admin.site.register(Comments)
 admin.site.register(PrayFor)
 admin.site.register(ImageBoxes)
 admin.site.register(VidBoxes)
 admin.site.register(LiveNow)
+admin.site.register(Stories)

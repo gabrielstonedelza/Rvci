@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Devotion,PrayerList,Events,Announcements,Comments,PrayFor
+from .models import Devotion,PrayerList,Events,Announcements,PrayFor
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from users.models import User

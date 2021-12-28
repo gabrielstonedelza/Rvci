@@ -1,12 +1,24 @@
 from rest_framework import serializers
-from .models import  (Devotion, PrayerList, Events, Announcements, Comments, PrayFor,Testimonies, ImageBoxes,VidBoxes,LiveNow)
+from .models import  (Devotion, PrayerList, Events, Announcements, PrayFor,ImageBoxes,VidBoxes,LiveNow,Stories)
 
 class DevotionSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
 
     class Meta:
         model = Devotion
-        fields = ['id','user','username','title','message','slug','devotion_vid','date_posted']
+        fields = ['id','user','username','title','message','slug','date_posted']
+        read_only_fields = ['user']
+
+    def get_username(self, user):
+        username = user.user.username
+        return username
+
+class StoriesSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField('get_username')
+
+    class Meta:
+        model = Stories
+        fields = ['id', 'user', 'username', 'story', 'date_posted']
         read_only_fields = ['user']
 
     def get_username(self, user):
@@ -36,36 +48,12 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         model = Announcements
         fields = ['id','title','message','get_absolute_announcement_url']
 
-class CommentsSerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField('get_username')
-
-    class Meta:
-        model = Comments
-        fields = ['id','user','username','devotion','comment','get_absolute_comment_url','date_commented']
-        read_only_fields = ['user']
-
-    def get_username(self, user):
-        username = user.user.username
-        return username
-
 class PrayforSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
 
     class Meta:
         model = PrayFor
         fields = ['id','user','username','prayer','prayer_text','get_absolute_prayfor_url','date_posted']
-        read_only_fields = ['user']
-
-    def get_username(self, user):
-        username = user.user.username
-        return username
-
-class TestimonySerializer(serializers.ModelSerializer):
-    username = serializers.SerializerMethodField('get_username')
-
-    class Meta:
-        model =Testimonies
-        fields = ['id','user','username','testimony','date_posted']
         read_only_fields = ['user']
 
     def get_username(self, user):
