@@ -31,5 +31,6 @@ urlpatterns = [
     path('get_vids/', views.get_all_videos),
 
     path('post_live/', views.add_live),
-    path('get_live/', views.get_live_now)
+    path('get_live/', views.get_live_now),
+    path('get_daily_vid/', views.get_daily_vid),
 ]

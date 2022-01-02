@@ -33,6 +33,13 @@ class Devotion(models.Model):
         self.slug = slugify(value, allow_unicode=True)
         super().save(*args, **kwargs)
 
+class DailyVids(models.Model):
+    vid_url = models.CharField(max_length=100)
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.vid_url
+
 
 class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

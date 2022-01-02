@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
-from .models import  (Devotion, PrayerList, Events, Announcements, PrayFor, ImageBoxes,VidBoxes,LiveNow,Stories)
-from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,PrayforSerializer,AnnouncementSerializer,ImageBoxSerializer,VidBoxSerializer,LiveSerializer,StoriesSerializer)
+from .models import  (Devotion, PrayerList, Events, Announcements, PrayFor, ImageBoxes,VidBoxes,LiveNow,Stories,DailyVids)
+from .serializers import (DevotionSerializer,PrayerListSerializer,EventsSerializer,PrayforSerializer,AnnouncementSerializer,ImageBoxSerializer,VidBoxSerializer,LiveSerializer,StoriesSerializer,DailyVidsSerializer)
 from datetime import datetime,date,time,timedelta
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import viewsets, permissions, generics, status
@@ -249,4 +249,11 @@ def add_live(request):
 def get_live_now(request):
     live_now = LiveNow.objects.all().order_by('-date_posted')
     serializer = LiveSerializer(live_now,many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_daily_vid(request):
+    live_now = DailyVids.objects.all().order_by('-date_posted')
+    serializer = DailyVidsSerializer(live_now,many=True)
     return Response(serializer.data)
