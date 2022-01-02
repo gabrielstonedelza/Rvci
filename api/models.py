@@ -36,7 +36,6 @@ class Devotion(models.Model):
 
 class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_pic = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="userprofilepic")
     story = models.FileField(upload_to="stories",validators=[validate_story_size])
     time_posted = models.TimeField(default=datetime.now)
     date_posted = models.DateField(default=datetime.now)
@@ -46,12 +45,9 @@ class Stories(models.Model):
 
     def get_story_vid(self):
         if self.story:
-            return "https:www.rvci.xyz" + self.story.url
+            return "https://rvci.xyz" + self.story.url
         return ""
-    def get_story_user(self):
-        if self.user_pic:
-            return "https:www.rvci.xyz" + self.user_pic.profile.profile_pic.url
-        return ""
+
 
 class PrayerList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

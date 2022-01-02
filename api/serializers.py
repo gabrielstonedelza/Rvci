@@ -15,6 +15,7 @@ class DevotionSerializer(serializers.ModelSerializer):
 
 class StoriesSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
+    user_pic = serializers.SerializerMethodField('get_user_pic')
 
     class Meta:
         model = Stories
@@ -24,6 +25,10 @@ class StoriesSerializer(serializers.ModelSerializer):
     def get_username(self, user):
         username = user.user.username
         return username
+
+    def get_user_pic(self, profile):
+        user_pic = profile.user.profile_pic.url
+        return user_pic
 
 class PrayerListSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
