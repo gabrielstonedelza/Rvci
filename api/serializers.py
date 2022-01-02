@@ -15,20 +15,17 @@ class DevotionSerializer(serializers.ModelSerializer):
 
 class StoriesSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')
-    user_pic = serializers.SerializerMethodField('get_user_pic')
+
 
     class Meta:
         model = Stories
-        fields = ['id', 'user', 'username', 'story', 'date_posted','time_posted','user_pic','get_story_vid']
+        fields = ['id', 'user', 'username', 'story', 'date_posted','time_posted','user_pic','get_story_vid','get_user_pic']
         read_only_fields = ['user']
 
     def get_username(self, user):
         username = user.user.username
         return username
 
-    def get_user_pic(self, profile):
-        user_pic = profile.user.profile_pic.url
-        return user_pic
 
 class PrayerListSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField('get_username')

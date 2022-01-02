@@ -47,6 +47,11 @@ class Stories(models.Model):
         if self.story:
             return "https://rvci.xyz" + self.story.url
         return ""
+    def get_user_pic(self):
+        my_user = Profile.objects.get(user=self.user)
+        if my_user:
+            return "https://rvci.xyz" + my_user.profile_pic.url
+        return ""
 
 
 class PrayerList(models.Model):
