@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from users.serializers import ProfileSerializer
 from users.models import User,Profile
+from django.utils import timezone
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
@@ -21,10 +22,17 @@ def post_stories(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_stories(request):
-    # time_threshold = datetime.datetime.now(timezone.utc) - datetime.timedelta(hours=1)
+    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=40)
+    query = Stories.objects.filter(time_posted__gt=time_threshold)
+    serializer = StoriesSerializer(query,many=True)
+    return Response(serializer.data)
 
-    stories = Stories.objects.all().order_by('-date_posted')
-    serializer = DevotionSerializer(stories,many=True)
+@permission_classes([permissions.IsAuthenticated])
+def get_user_stories(request,pk):
+    user = User.objects.get(pk=pk)
+    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=40)
+    query = Stories.objects.filter(user=user).filter(time_posted__gt=time_threshold)
+    serializer = StoriesSerializer(query,many=True)
     return Response(serializer.data)
 
 # add devotion

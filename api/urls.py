@@ -5,6 +5,8 @@ urlpatterns = [
     path('post_devotion/', views.post_devotion),
     path('post_story/', views.post_stories),
     path('get_devotions/', views.get_devotions),
+    path('get_stories/', views.get_stories),
+    path('get_user_stories/<int:pk>/', views.get_user_stories),
     path('get_user_devotions/', views.get_user_devotions),
     path('devotion_detail/<str:slug>/', views.devotion_detail),
     path('post_prayer/', views.post_prayer),

@@ -18,7 +18,7 @@ class StoriesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stories
-        fields = ['id', 'user', 'username', 'story', 'date_posted']
+        fields = ['id', 'user', 'username', 'story', 'date_posted','time_posted','get_story_vid']
         read_only_fields = ['user']
 
     def get_username(self, user):

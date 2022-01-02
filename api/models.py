@@ -5,6 +5,7 @@ from PIL import Image
 from django.utils.text import slugify
 from .validator import validate_story_size
 from .validator import validate_devotion_size
+from datetime import datetime,date,time,timedelta
 
 User = settings.AUTH_USER_MODEL
 
@@ -35,11 +36,16 @@ class Devotion(models.Model):
 class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     story = models.FileField(upload_to="stories",validators=[validate_story_size])
-    time_posted = models.TimeField(default=timezone.now)
-    date_posted = models.DateField(default=timezone.now)
+    time_posted = models.TimeField(default=datetime.now)
+    date_posted = models.DateField(default=datetime.now)
 
     def __str__(self):
         return f"{self.user.username} added a new story"
+
+    def get_story_vid(self):
+        if self.story:
+            return "127.0.0.1:8000" + self.story.url
+        return ""
 
 class PrayerList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
