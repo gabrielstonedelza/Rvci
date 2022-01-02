@@ -47,7 +47,9 @@ class Stories(models.Model):
             return "https:www.rvci.xyz" + self.story.url
         return ""
     def get_story_user(self):
-        return "https:www.rvci.xyz" + self.profile.user.profile_pic.url
+        if self.user:
+            return "https:www.rvci.xyz" + self.user.profile.profile_pic.url
+        return ""
 
 class PrayerList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
