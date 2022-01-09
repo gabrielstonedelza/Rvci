@@ -4,7 +4,6 @@ from django.utils import timezone
 from PIL import Image
 from django.utils.text import slugify
 from .validator import validate_story_size
-from .validator import validate_devotion_size
 from datetime import datetime,date,time,timedelta
 from users.models import  Profile
 
