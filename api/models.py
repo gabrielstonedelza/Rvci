@@ -44,8 +44,8 @@ class DailyVids(models.Model):
 class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     story = models.FileField(upload_to="stories",validators=[validate_story_size])
-    time_posted = models.TimeField(default=datetime.now)
-    date_posted = models.DateField(default=datetime.now)
+    time_posted = models.TimeField(auto_now_add=True)
+    date_posted = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} added a new story"
@@ -59,7 +59,6 @@ class Stories(models.Model):
         if my_user:
             return "https://rvci.xyz" + my_user.profile_pic.url
         return ""
-
 
 class PrayerList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
