@@ -22,18 +22,20 @@ def post_stories(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_stories(request):
-    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=40)
+    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=10)
     query = Stories.objects.filter(time_posted__gt=time_threshold)
     serializer = StoriesSerializer(query,many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_user_stories(request,pk):
-    user = User.objects.get(pk=pk)
+    user = get_object_or_404(User,pk=pk)
     time_threshold = datetime.now(timezone.utc) - timedelta(minutes=40)
     query = Stories.objects.filter(user=user).filter(time_posted__gt=time_threshold)
     serializer = StoriesSerializer(query,many=True)
     return Response(serializer.data)
+
 
 # add devotion
 @api_view(['POST'])
