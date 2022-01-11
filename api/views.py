@@ -22,8 +22,11 @@ def post_stories(request):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def get_stories(request):
-    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=10)
-    query = Stories.objects.filter(time_posted__gt=time_threshold)
+    # time_threshold = datetime.now(timezone.utc) - timedelta(hours=10)
+    # query = Stories.objects.filter(time_posted__gt=time_threshold)
+    my_time = datetime.now()
+
+    query = Stories.objects.all().order_by('-date_posted')
     serializer = StoriesSerializer(query,many=True)
     return Response(serializer.data)
 

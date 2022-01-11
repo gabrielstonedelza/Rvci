@@ -43,8 +43,8 @@ class DailyVids(models.Model):
 class Stories(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     story = models.FileField(upload_to="stories",validators=[validate_story_size])
-    time_posted = models.TimeField(auto_now_add=True)
-    date_posted = models.DateField(auto_now_add=True)
+    time_posted = models.TimeField(default=timezone.now)
+    date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} added a new story"
