@@ -34,8 +34,7 @@ def get_stories(request):
 @permission_classes([permissions.IsAuthenticated])
 def get_user_stories(request,pk):
     user = get_object_or_404(User,pk=pk)
-    time_threshold = datetime.now(timezone.utc) - timedelta(minutes=40)
-    query = Stories.objects.filter(user=user).filter(time_posted__gt=time_threshold)
+    query = Stories.objects.filter(user=user).order_by('-date_posted')
     serializer = StoriesSerializer(query,many=True)
     return Response(serializer.data)
 
